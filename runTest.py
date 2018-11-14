@@ -1,12 +1,13 @@
 #-*- coding:utf8 -*-
 from base.readConfig import ReadConfig
+from common.httpclient.doRequest import DoRequest
 from init.init import init
 from selenium.webdriver.remote.remote_connection import RemoteConnection
 from selenium.webdriver.remote.command import Command
 import argparse
+import json
 import pytest
 import sys
-import jpype
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser()
@@ -15,6 +16,17 @@ if __name__=='__main__':
     args=parser.parse_args()
 
     print '开始初始化......'
+    print '开始检测selenium server是否可用......'
+    try:
+        doRquest=DoRequest(ReadConfig().config.selenium_hub)
+        httpResponseResult=doRquest.get('/status')
+        result=json.loads(httpResponseResult.body)
+        if result['status']==0:
+            print 'selenium server状态为可用......'
+        else:
+            sys.exit('selenium server状态为不可用')
+    except:
+        sys.exit('selenium server状态为不可用')
 
     print '初始化基础数据......'
     init()
