@@ -87,7 +87,7 @@
         * Windows 32位：HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE
         * 如果FEATRUE_BFCACHE项不存在，需要创建一个，然后在里面创建一个DWORD(32位)，命名为iexplore.exe，值为0
         * 重启系统
-    * 建议设置ie退出时自动删除历史记录,因为selenium操作删除ie浏览器cookies没办法删完整
+    * 建议设置IE11退出时自动删除历史记录,因为selenium操作删除IE11浏览器cookies没办法删完整
     * 注:https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver#required-configuration
 
 ## 二、修改配置
@@ -104,8 +104,8 @@
 
 ## 四、生成测试报告
 * cd WEBUIAutomationTest/
-* python generateReport.py -p 9080
-* 访问地址http://ip:9080
+* python generateReport.py -ieport 9080 -chromeport 9081 -firefoxport 982
+* 访问地址http://ip:908[0-3]
 * 在使用Ubuntu进行报告生成时，请勿使用sudo权限，否则无法生成，allure不支持
 
 ## 五、项目说明
@@ -152,6 +152,7 @@
 * 统一使用Firefox浏览器进行元素定位
 * 能用id、name、link(不常变化的链接)定位的，不使用css定位，能使用css定位，不使用xpath定位
 * 项目使用并发运行，故编写测试用例时，应该避免模块与模块直接的用例会相互影响测试结果
+* * 测试IE11时使用1个worker进行测试,因为selenium操作删除IE11浏览器cookies没办法删完整
 
 # [打赏]()
 ![avatar](https://github.com/yanchunhuo/resources/blob/master/Alipay.jpg)
