@@ -22,4 +22,6 @@ class ReadConfig(object):
         config = Config()
         config.selenium_hub=configParser.get('selenium_server','selenium_hub')
         config.test_workers=configParser.get('test','test_workers')
+        config.test_browsers = configParser.get('browser', 'test_browsers').split('||')
+        config.current_browser = configParser.get('browser', 'current_browser')
         return config

@@ -12,7 +12,7 @@ class DemoProjectClient:
         self.config=ReadConfig().config
         self.demoProjectConfig=DemoProjectReadConfig().config
 
-        self.driver = DriverTool.get_driver(self.config.selenium_hub, self.demoProjectConfig.browser_type)
+        self.driver = DriverTool.get_driver(self.config.selenium_hub, self.config.current_browser)
         self.driver.get(self.demoProjectConfig.web_host + '/cloud/auth/login/')
         self.browserOperator = BrowserOperator(self.driver)
         if browserOperator_type==1:

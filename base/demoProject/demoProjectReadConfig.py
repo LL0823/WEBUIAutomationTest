@@ -20,7 +20,6 @@ class DemoProjectReadConfig(object):
         config = ConfigParser.ConfigParser()
         config.read(configFile)
         demoProjectConfig = DemoProjectConfig()
-        demoProjectConfig.browser_type = config.get('browsers', 'browser_type')
         demoProjectConfig.web_host = config.get('servers','web_host')
         demoProjectConfig.mysql_server = config.get('mysql', 'mysql_server')
         demoProjectConfig.mysql_port = config.get('mysql', 'mysql_port')
