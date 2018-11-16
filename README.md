@@ -86,8 +86,10 @@
         * Windows 64位：HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE
         * Windows 32位：HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE
         * 如果FEATRUE_BFCACHE项不存在，需要创建一个，然后在里面创建一个DWORD(32位)，命名为iexplore.exe，值为0
-        * 重启系统
-    * 建议设置IE11退出时自动删除历史记录,因为selenium操作删除IE11浏览器cookies没办法删完整
+        * Windows 64位两个注册表建议都设置
+    * IE8及以上版本设置支持inprivate模式，以便多开IE窗口时cookies能够独享
+        * HKKY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main 下建一个名为TabProcGrowth的DWORD(32位)，值为0
+    * 重启系统
     * 注:https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver#required-configuration
 
 ## 二、修改配置
