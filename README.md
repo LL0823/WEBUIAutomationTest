@@ -106,7 +106,7 @@
 
 ## 四、生成测试报告
 * cd WEBUIAutomationTest/
-* python generateReport.py -ieport 9080 -chromeport 9081 -firefoxport 982
+* python generateReport.py -ieport 9080 -chromeport 9081 -firefoxport 9082
 * 访问地址http://ip:908[0-3]
 * 在使用Ubuntu进行报告生成时，请勿使用sudo权限，否则无法生成，allure不支持
 
