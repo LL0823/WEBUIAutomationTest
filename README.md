@@ -71,7 +71,7 @@
     * 下载地址:http://selenium-release.storage.googleapis.com/index.html
     * 以管理员身份启动服务:java -jar selenium-server-standalone-3.14.0.jar -log selenium.log
 * 下载浏览器驱动
-    * 谷歌浏览器：http://npm.taobao.org/mirrors/chromedriver/
+    * 谷歌浏览器：https://chromedriver.storage.googleapis.com/index.html
     * 火狐浏览器：https://github.com/mozilla/geckodriver/
         * 驱动支持的浏览器版本：https://firefox-source-docs.mozilla.org/testing/geckodriver/geckodriver/Support.html
     * IE浏览器(建议使用32位,64位操作极慢)：http://selenium-release.storage.googleapis.com/index.html
