@@ -154,7 +154,6 @@
 * 统一使用Firefox浏览器进行元素定位
 * 能用id、name、link(不常变化的链接)定位的，不使用css定位，能使用css定位，不使用xpath定位
 * 项目使用并发运行，故编写测试用例时，应该避免模块与模块直接的用例会相互影响测试结果
-* * 测试IE11时使用1个worker进行测试,因为selenium操作删除IE11浏览器cookies没办法删完整
 
 # [打赏]()
 ![avatar](https://github.com/yanchunhuo/resources/blob/master/Alipay.jpg)
