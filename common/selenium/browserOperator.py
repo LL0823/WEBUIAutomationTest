@@ -457,7 +457,6 @@ class BrowserOperator:
             subWebElements = WebDriverWait(webElement,wait_seconds).until(lambda webElement:webElement.find_elements_by_tag_name(locator_value))
         else:
             return None
-        print subWebElements
         for subWebElement in subWebElements:
             self.highLight(subWebElement)
         return subWebElements
