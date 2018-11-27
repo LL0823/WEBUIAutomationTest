@@ -208,7 +208,7 @@ class BrowserOperator:
 
     def get_screenshot(self,fileName):
         fileName=DateTimeTool.getNowTime('%Y%m%d%H%M%S%f_')+fileName
-        allure.MASTER_HELPER.attach(fileName,self._driver.get_screenshot_as_png(),allure.MASTER_HELPER.attach_type.PNG)
+        allure.attach(name=fileName,body=self._driver.get_screenshot_as_png(),attachment_type=allure.attachment_type.PNG)
 
     def refresh(self):
         self._driver.refresh()

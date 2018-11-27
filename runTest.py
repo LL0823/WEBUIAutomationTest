@@ -43,7 +43,7 @@ if __name__=='__main__':
         FileTool.replaceFileContent('config/config.conf','\r\n','\n')
         FileTool.replaceFileContentWithLBRB('config/config.conf','='+current_browser,'current_browser','\n')
         # 执行pytest前的参数准备
-        pytest_execute_params=['-c', 'config/pytest.conf', '-v', '--alluredir', 'output/'+current_browser+'/','-n',ReadConfig().config.test_workers,'--dist','loadfile']
+        pytest_execute_params=['-c', 'config/pytest.conf', '-v', '--alluredir', 'output/'+current_browser+'/','--clean-alluredir','-n',ReadConfig().config.test_workers,'--dist','loadfile']
         # 判断目录参数
         dir = 'cases'
         if args.dir:

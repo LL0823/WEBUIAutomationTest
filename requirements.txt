@@ -1,5 +1,5 @@
 pytest==3.5.0
-pytest-allure-adaptor==1.7.10
+allure-pytest==2.4.1
 pytest-xdist==1.23.2
 selenium==3.14.0
 assertpy==0.13
