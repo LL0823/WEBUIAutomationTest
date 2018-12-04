@@ -5,6 +5,7 @@ class Config:
         self.test_workers=None
         self.test_browsers=[]
         self.current_browser=None
+        self.download_dir = None
 
     @property
     def selenium_hub(self):
@@ -29,3 +30,11 @@ class Config:
     @current_browser.setter
     def current_browser(self,current_browser):
         self.current_browser=current_browser
+
+    @property
+    def download_dir(self):
+        return self.download_dir
+
+    @download_dir.setter
+    def download_dir(self,download_dir):
+        self.download_dir=download_dir

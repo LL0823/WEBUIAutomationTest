@@ -247,10 +247,10 @@ class BrowserOperator:
         return webElement.get_attribute(attribute_name)
 
     def get_element_outer_html(self,element):
-        return self.get_attribute(element,'outerHTML')
+        return self.get_attribute(element,'outerHTML').encode('utf-8')
 
     def get_element_inner_html(self, element):
-        return self.get_attribute(element,'innerHTML')
+        return self.get_attribute(element,'innerHTML').encode('utf-8')
 
     def get_table_data(self,element,data_type='text'):
         """
@@ -278,7 +278,7 @@ class BrowserOperator:
             tr_tds = tr.find_elements_by_tag_name('td')
             if data_type.lower()=='text':
                 for td in tr_tds:
-                    tr_data.append(td.text)
+                    tr_data.append(td.text.encode('utf-8'))
             elif data_type.lower()=='html':
                 for td in tr_tds:
                     tr_data.append(td.get_attribute('innerHTML'))

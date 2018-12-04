@@ -24,4 +24,5 @@ class ReadConfig(object):
         config.test_workers=configParser.get('test','test_workers')
         config.test_browsers = configParser.get('browser', 'test_browsers').split('||')
         config.current_browser = configParser.get('browser', 'current_browser')
+        config.download_dir=configParser.get('browser','download_dir')
         return config
