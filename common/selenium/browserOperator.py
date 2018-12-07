@@ -8,6 +8,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import StaleElementReferenceException
 from page_objects.wait_type import Wait_Type  as Wait_By
+from page_objects.locator_type import Locator_Type
 import allure
 import os
 
@@ -19,6 +20,15 @@ class BrowserOperator:
     def __init__(self,driver):
         self._driver=driver
 
+    def _change_element_to_webElement_type(self,element):
+        if isinstance(element, ElementInfo):
+            webElement=self.getElement(element)
+        elif isinstance(element,WebElement):
+            webElement=element
+        else:
+            return None
+        return webElement
+
     def get(self,url):
         self._driver.get(url)
 
@@ -29,63 +39,44 @@ class BrowserOperator:
         return self._driver.title.encode('utf-8')
 
     def getText(self,element):
-        if isinstance(element, ElementInfo):
-            webElement=self.getElement(element)
-        elif isinstance(element,WebElement):
-            webElement=element
-        else:
-            return None
-        return webElement.text.encode('utf-8')
+        webElement=self._change_element_to_webElement_type(element)
+        if webElement:
+            return webElement.text.encode('utf-8')
 
     def click(self,element):
-        if isinstance(element, ElementInfo):
-            webElement=self.getElement(element)
-        elif isinstance(element,WebElement):
-            webElement=element
-        else:
-            return None
-        webElement.click()
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            webElement.click()
+
+    def submit(self,element):
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            webElement.submit()
 
     def sendText(self,element,text):
         text=text.decode('utf-8')
-        if isinstance(element, ElementInfo):
-            webElement=self.getElement(element)
-        elif isinstance(element,WebElement):
-            webElement=element
-        else:
-            return None
-        webElement.clear()
-        webElement.send_keys(text)
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            webElement.clear()
+            webElement.send_keys(text)
 
     def is_displayed(self,element):
-        if isinstance(element, ElementInfo):
-            webElement=self.getElement(element)
-        elif isinstance(element,WebElement):
-            webElement=element
-        else:
-            return None
-        flag=webElement.is_displayed()
-        return flag
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            flag=webElement.is_displayed()
+            return flag
 
     def is_enabled(self,element):
-        if isinstance(element, ElementInfo):
-            webElement = self.getElement(element)
-        elif isinstance(element,WebElement):
-            webElement=element
-        else:
-            return None
-        flag = webElement.is_enabled()
-        return flag
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            flag = webElement.is_enabled()
+            return flag
 
     def is_selected(self,element):
-        if isinstance(element, ElementInfo):
-            webElement = self.getElement(element)
-        elif isinstance(element,WebElement):
-            webElement=element
-        else:
-            return None
-        flag = webElement.is_selected()
-        return flag
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            flag = webElement.is_selected()
+            return flag
 
     def select_dropDownBox_by_value(self,element,value):
         """
@@ -94,13 +85,10 @@ class BrowserOperator:
         :param value:
         :return:
         """
-        if isinstance(element, ElementInfo):
-            webElement = Select(self.getElement(element))
-        elif isinstance(element,WebElement):
-            webElement=Select(element)
-        else:
-            return None
-        webElement.select_by_value(value)
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            webElement=Select(webElement)
+            webElement.select_by_value(value)
 
     def select_dropDownBox_by_text(self,element,text):
         """
@@ -109,13 +97,10 @@ class BrowserOperator:
         :param text:
         :return:
         """
-        if isinstance(element, ElementInfo):
-            webElement= Select(self.getElement(element))
-        elif isinstance(element,WebElement):
-            webElement=element
-        else:
-            return None
-        webElement.select_by_visible_text(text)
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            webElement=Select(webElement)
+            webElement.select_by_visible_text(text)
 
     def select_dropDownBox_by_index(self,element,index):
         """
@@ -124,13 +109,10 @@ class BrowserOperator:
         :param index:
         :return:
         """
-        if isinstance(element, ElementInfo):
-            webElement= Select(self.getElement(element))
-        elif isinstance(element,WebElement):
-            webElement=element
-        else:
-            return None
-        webElement.select_by_index(index)
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            webElement=Select(webElement)
+            webElement.select_by_index(index)
 
     def select_dropDownBox_by_values(self,element,values):
         """
@@ -139,15 +121,12 @@ class BrowserOperator:
         :param values:以数组传参
         :return:
         """
-        if isinstance(element, ElementInfo):
-            webElement = Select(self.getElement(element))
-        elif isinstance(element, WebElement):
-            webElement = Select(element)
-        else:
-            return None
-        webElement.deselect_all()
-        for value in values:
-            webElement.select_by_value(value)
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            webElement=Select(webElement)
+            webElement.deselect_all()
+            for value in values:
+                webElement.select_by_value(value)
 
     def select_dropDownBox_by_texts(self,element,texts):
         """
@@ -156,15 +135,12 @@ class BrowserOperator:
         :param texts:以数组传参
         :return:
         """
-        if isinstance(element, ElementInfo):
-            webElement = Select(self.getElement(element))
-        elif isinstance(element, WebElement):
-            webElement = Select(element)
-        else:
-            return None
-        webElement.deselect_all()
-        for text in texts:
-            webElement.select_by_visible_text(text)
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            webElement=Select(webElement)
+            webElement.deselect_all()
+            for text in texts:
+                webElement.select_by_visible_text(text)
 
     def select_dropDownBox_by_indexs(self,element,indexs):
         """
@@ -173,15 +149,12 @@ class BrowserOperator:
         :param indexs: 以数组传参
         :return:
         """
-        if isinstance(element, ElementInfo):
-            webElement = Select(self.getElement(element))
-        elif isinstance(element, WebElement):
-            webElement = Select(element)
-        else:
-            return None
-        webElement.deselect_all()
-        for index in indexs:
-            webElement.select_by_index(index)
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            webElement=Select(webElement)
+            webElement.deselect_all()
+            for index in indexs:
+                webElement.select_by_index(index)
 
     def switch_to_window(self,window_name):
         self._driver.switch_to.window(window_name)
@@ -221,31 +194,19 @@ class BrowserOperator:
         :param filePath:
         :return:
         """
-        if isinstance(element, ElementInfo):
-            webElement = self.getElement(element)
-        elif isinstance(element,WebElement):
-            webElement = element
-        else:
-            return None
-        webElement.send_keys(os.path.abspath(filePath))
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            webElement.send_keys(os.path.abspath(filePath))
 
     def get_property(self,element,property_name):
-        if isinstance(element, ElementInfo):
-            webElement = self.getElement(element)
-        elif isinstance(element,WebElement):
-            webElement = element
-        else:
-            return None
-        return webElement.get_property(property_name)
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            return webElement.get_property(property_name)
 
     def get_attribute(self,element,attribute_name):
-        if isinstance(element, ElementInfo):
-            webElement = self.getElement(element)
-        elif isinstance(element,WebElement):
-            webElement = element
-        else:
-            return None
-        return webElement.get_attribute(attribute_name)
+        webElement = self._change_element_to_webElement_type(element)
+        if webElement:
+            return webElement.get_attribute(attribute_name)
 
     def get_element_outer_html(self,element):
         return self.get_attribute(element,'outerHTML').encode('utf-8')
@@ -284,8 +245,8 @@ class BrowserOperator:
                     for td in tr_tds:
                         tr_data.append(td.get_attribute('innerHTML'))
                 table_data.append(tr_data)
-        except StaleElementReferenceException, e:
-                print '获取表格内容异常:' + e.message
+        except StaleElementReferenceException,e:
+            print '获取表格内容异常:'+e.message
         return table_data
 
     def getElement(self,elementInfo):
