@@ -16,11 +16,11 @@ class TestLogin:
         self.indexPage.click_user_logout()
 
     def test_login_success(self,fixture_test_login_success):
-        self.indexPage=self.loginPage.loginSuccess(self.demoProjectClient.demoProjectConfig.normal_username,self.demoProjectClient.demoProjectConfig.normal_password)
+        self.indexPage=self.loginPage.login_success(self.demoProjectClient.demoProjectConfig.normal_username,self.demoProjectClient.demoProjectConfig.normal_password)
         assert_that(self.demoProjectClient.browserOperator.getTitle()).is_equal_to(self.indexPage.getElements().title.wait_expected_value)
 
     def test_empty_username_and_empty_password(self):
-        self.loginPage.loginFail('', '')
+        self.loginPage.login_fail('', '')
         assert_that(self.demoProjectClient.browserOperator.getText(
             self.loginPage.getElements().loginEmptyUsernameAndPassword_password_tip)).is_equal_to(
             self.loginPage.getElements().loginEmptyUsernameAndPassword_password_tip.expected_value)
@@ -29,13 +29,13 @@ class TestLogin:
             self.loginPage.getElements().loginEmptyUsernameAndPassword_username_tip.expected_value)
 
     def test_empty_username(self):
-        self.loginPage.loginFail('','123456')
+        self.loginPage.login_fail('','123456')
         assert_that(self.demoProjectClient.browserOperator.getText(
             self.loginPage.getElements().loginEmptyUsername_tip)).is_equal_to(
             self.loginPage.getElements().loginEmptyUsername_tip.expected_value)
 
     def test_empty_password(self):
-        self.loginPage.loginFail('admin', '')
+        self.loginPage.login_fail('admin', '')
         assert_that(self.demoProjectClient.browserOperator.getText(
             self.loginPage.getElements().loginEmptyPassword_tip)).is_equal_to(
             self.loginPage.getElements().loginEmptyPassword_tip.expected_value)

@@ -8,17 +8,22 @@ class LoginPage:
         self._browserOperator.explicit_wait_page_title(self._loginPageElements.title)
         self._browserOperator.get_screenshot('loginPage')
 
-    def loginSuccess(self,username,password):
-        self._browserOperator.sendText(self._loginPageElements.usernameInput,username)
-        self._browserOperator.sendText(self._loginPageElements.passwordInput,password)
+    def _send_login_info(self,username,password):
+        self._browserOperator.sendText(self._loginPageElements.usernameInput, username)
+        self._browserOperator.sendText(self._loginPageElements.passwordInput, password)
+
+    def _login_submit(self):
         self._browserOperator.click(self._loginPageElements.loginBtn)
+
+    def login_success(self,username,password):
+        self._send_login_info(username,password)
+        self._login_submit()
         self._browserOperator.get_screenshot('loginSuccess')
         return IndexPage(self._browserOperator)
 
-    def loginFail(self,username,password):
-        self._browserOperator.sendText(self._loginPageElements.usernameInput, username)
-        self._browserOperator.sendText(self._loginPageElements.passwordInput, password)
-        self._browserOperator.click(self._loginPageElements.loginBtn)
+    def login_fail(self,username,password):
+        self._send_login_info(username, password)
+        self._login_submit()
         self._browserOperator.get_screenshot('loginFail')
 
     def getElements(self):
