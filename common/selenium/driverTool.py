@@ -3,7 +3,8 @@ from base.readConfig import ReadConfig
 from selenium import webdriver
 from selenium.webdriver.ie import webdriver as ie_webdriver
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options as Firefox_Options
+from selenium.webdriver.chrome.options import Options as Chrome_Options
 
 class DriverTool:
 
@@ -27,11 +28,16 @@ class DriverTool:
             firefox_profile.set_preference('browser.download.folderList',2) # 0是桌面;1是“我的下载”;2是自定义
             firefox_profile.set_preference('browser.download.dir',ReadConfig().config.download_dir)
             firefox_profile.set_preference('browser.helperApps.neverAsk.saveToDisk',download_file_content_types)
-            driver = webdriver.Remote(selenium_hub, webdriver.DesiredCapabilities.FIREFOX.copy(),browser_profile=firefox_profile)
+            firefox_options = Firefox_Options()
+            if ReadConfig().config.is_firefox_headless.lower()=='true':
+                firefox_options.add_argument('--headless')
+            driver = webdriver.Remote(selenium_hub, webdriver.DesiredCapabilities.FIREFOX.copy(),browser_profile=firefox_profile,options=firefox_options)
         elif browser_type=='chrome':
-            chrome_options=Options()
+            chrome_options=Chrome_Options()
             prefs={'download.default_directory':ReadConfig().config.download_dir,'profile.default_content_settings.popups':0}
             chrome_options.add_experimental_option('prefs',prefs)
+            if ReadConfig().config.is_chrome_headless.lower()=='true':
+                chrome_options.add_argument('--headless')
             driver = webdriver.Remote(selenium_hub, webdriver.DesiredCapabilities.CHROME.copy(),options=chrome_options)
         else:
             return driver

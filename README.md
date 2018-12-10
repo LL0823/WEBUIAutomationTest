@@ -116,6 +116,7 @@
 * 封装的定位类型支持:page_objects/locator_type.py
 * 默认使用4个worker进行并行测试
 * 文件下载处理暂不支持ie浏览器
+* 无头浏览器暂不支持ie浏览器
 * 项目
     * demoProject
         * 例子项目

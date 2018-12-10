@@ -6,6 +6,8 @@ class Config:
         self.test_browsers=[]
         self.current_browser=None
         self.download_dir = None
+        self.is_chrome_headless = None
+        self.is_firefox_headless = None
 
     @property
     def selenium_hub(self):
@@ -38,3 +40,19 @@ class Config:
     @download_dir.setter
     def download_dir(self,download_dir):
         self.download_dir=download_dir
+
+    @property
+    def is_chrome_headless(self):
+        return self.is_chrome_headless
+
+    @is_chrome_headless.setter
+    def is_chrome_headless(self, is_chrome_headless):
+        self.is_chrome_headless = is_chrome_headless
+
+    @property
+    def is_firefox_headless(self):
+        return self.is_firefox_headless
+
+    @is_firefox_headless.setter
+    def is_firefox_headless(self, is_firefox_headless):
+        self.is_firefox_headless = is_firefox_headless

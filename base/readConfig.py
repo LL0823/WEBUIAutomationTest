@@ -25,4 +25,6 @@ class ReadConfig(object):
         config.test_browsers = configParser.get('browser', 'test_browsers').split('||')
         config.current_browser = configParser.get('browser', 'current_browser')
         config.download_dir=configParser.get('browser','download_dir')
+        config.is_chrome_headless=configParser.get('browser','is_chrome_headless')
+        config.is_firefox_headless = configParser.get('browser', 'is_firefox_headless')
         return config
