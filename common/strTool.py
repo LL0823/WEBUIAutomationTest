@@ -68,7 +68,7 @@ class StrTool:
         return result
 
     @classmethod
-    def addFix(self,sourceStr,isPre=False,preStr='',isSuffix=False,suffixStr=''):
+    def addFix(cls, sourceStr, isPre=False, preStr='', isSuffix=False, suffixStr=''):
         """
         字符串加前后缀
         :param sourceStr:
@@ -102,6 +102,7 @@ class StrTool:
     def replaceContentWithLBRB(cls, content, new, lbStr, rbStr, replaceOffset=0):
         """
         根据左右字符串匹配要替换的内容，支持多处匹配只替换一处的功能
+        :param content:
         :param new: 要替换的新字符串
         :param lbStr: 要替换内容的左侧字符串
         :param rbStr: 要替换内容的右侧字符串

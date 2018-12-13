@@ -1,16 +1,18 @@
 #-*- coding:utf8 -*-
-from common.dateTimeTool import DateTimeTool
-from pojo.elementInfo import ElementInfo
+import os
+
+import allure
+from selenium.common.exceptions import StaleElementReferenceException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.common.by import By
-from selenium.common.exceptions import StaleElementReferenceException
+
+from common.dateTimeTool import DateTimeTool
 from page_objects.wait_type import Wait_Type  as Wait_By
-from page_objects.locator_type import Locator_Type
-import allure
-import os
+from pojo.elementInfo import ElementInfo
+
 
 class BrowserOperator:
     """
@@ -81,7 +83,7 @@ class BrowserOperator:
     def select_dropDownBox_by_value(self,element,value):
         """
         适用单选下拉框
-        :param webElement:
+        :param element:
         :param value:
         :return:
         """
@@ -93,7 +95,7 @@ class BrowserOperator:
     def select_dropDownBox_by_text(self,element,text):
         """
         适用单选下拉框
-        :param webElement:
+        :param element:
         :param text:
         :return:
         """
@@ -105,7 +107,7 @@ class BrowserOperator:
     def select_dropDownBox_by_index(self,element,index):
         """
         适用单选下拉框,下标从0开始
-        :param webElement:
+        :param element:
         :param index:
         :return:
         """
@@ -117,7 +119,7 @@ class BrowserOperator:
     def select_dropDownBox_by_values(self,element,values):
         """
         适用多选下拉框
-        :param webElement:
+        :param element:
         :param values:以数组传参
         :return:
         """
@@ -131,7 +133,7 @@ class BrowserOperator:
     def select_dropDownBox_by_texts(self,element,texts):
         """
         适用多选下拉框
-        :param webElement:
+        :param element:
         :param texts:以数组传参
         :return:
         """
@@ -145,7 +147,7 @@ class BrowserOperator:
     def select_dropDownBox_by_indexs(self,element,indexs):
         """
         适用多选下拉框，下标从0开始
-        :param webElement:
+        :param element:
         :param indexs: 以数组传参
         :return:
         """
@@ -190,7 +192,7 @@ class BrowserOperator:
     def uploadFile(self,element,filePath):
         """
         适用于元素为input且type="file"的文件上传
-        :param webElement:
+        :param element:
         :param filePath:
         :return:
         """
@@ -217,7 +219,7 @@ class BrowserOperator:
     def get_table_data(self,element,data_type='text'):
         """
         以二维数组返回表格每一行的每一列的数据[[row1][row2][colume1,clume2]]
-        :param webElement:
+        :param element:
         :param data_type: text-返回表格文本内容,html-返回表格html内容
         :return:
         """

@@ -17,4 +17,4 @@ class DemoProjectClient:
         self.browserOperator = BrowserOperator(self.driver)
         if browserOperator_type==1:
             loginPage=LoginPage(self.browserOperator)
-            loginPage.loginSuccess(self.demoProjectConfig.normal_username, self.demoProjectConfig.normal_password)
+            loginPage.login_success(self.demoProjectConfig.normal_username, self.demoProjectConfig.normal_password)
