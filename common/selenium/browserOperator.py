@@ -436,12 +436,16 @@ class BrowserOperator:
         self.getElement(elementInfo)
 
     def highLight(self,webElement,seconds=5):
-        self._driver.execute_script("element = arguments[0];" +
-                              "original_style = element.getAttribute('style');" +
-                              "element.setAttribute('style', original_style + \";" +
-                              " border: 3px dashed rgb(250,0,255);\");" +
-                              "setTimeout(function(){element.setAttribute('style', original_style);}, "+str(seconds*1000)+");",
-                                    webElement)
+        try:
+            # 进行StaleElementReferenceException异常捕获
+            self._driver.execute_script("element = arguments[0];" +
+                                  "original_style = element.getAttribute('style');" +
+                                  "element.setAttribute('style', original_style + \";" +
+                                  " border: 3px dashed rgb(250,0,255);\");" +
+                                  "setTimeout(function(){element.setAttribute('style', original_style);}, "+str(seconds*1000)+");",
+                                        webElement)
+        except StaleElementReferenceException,e:
+            print '高亮StaleElementReferenceException异常:'+e.message
 
     def getDriver(self):
         return self._driver
