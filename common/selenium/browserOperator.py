@@ -1,17 +1,18 @@
 #-*- coding:utf8 -*-
-import os
-
-import allure
-from selenium.common.exceptions import StaleElementReferenceException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support import expected_conditions
+from base.readConfig import ReadConfig
+from common.captchaRecognitionTool import CaptchaRecognitionTool
+from common.dateTimeTool import DateTimeTool
+from pojo.elementInfo import ElementInfo
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
-
-from common.dateTimeTool import DateTimeTool
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import StaleElementReferenceException
 from page_objects.wait_type import Wait_Type  as Wait_By
-from pojo.elementInfo import ElementInfo
+from PIL import Image
+import allure
+import os
 
 
 class BrowserOperator:
@@ -20,9 +21,10 @@ class BrowserOperator:
     """
 
     def __init__(self,driver):
+        self._config = ReadConfig().config
         self._driver=driver
 
-    def _change_element_to_webElement_type(self,element):
+    def _change_element_to_webElement_type(self,element,highlight_seconds=5):
         if isinstance(element, ElementInfo):
             webElement=self.getElement(element)
         elif isinstance(element,WebElement):
@@ -216,6 +218,33 @@ class BrowserOperator:
     def get_element_inner_html(self, element):
         return self.get_attribute(element,'innerHTML').encode('utf-8')
 
+    def get_captcha(self,element,language='eng'):
+        """
+        识别图片验证码
+        :param element: 验证码图片元素
+        :param language: eng:英文,chi_sim:中文
+        :return:
+        """
+        # 为防止截图包含高亮影响识别，元素不进行高亮
+        captcha_webElement=self._change_element_to_webElement_type(element,0)
+        left = captcha_webElement.location['x']
+        top = captcha_webElement.location['y']
+        right = captcha_webElement.location['x'] + captcha_webElement.size['width']
+        bottom = captcha_webElement.location['y'] + captcha_webElement.size['height']
+        # 首先进行屏幕截图
+        captcha_image_file_name=DateTimeTool.getNowTime('%Y%m%d%H%M%S%f_')+'captcha.png'
+        captcha_image_file_name=os.path.abspath('output/' + self._config.current_browser + '/' + captcha_image_file_name)
+        self._driver.get_screenshot_as_file(captcha_image_file_name)
+        img=Image.open(captcha_image_file_name)
+        # 验证码图片裁切并保存
+        img=img.crop((left,top,right,bottom))
+        img.save(captcha_image_file_name)
+        # 识别图片验证码
+        captcha=CaptchaRecognitionTool.captchaRecognition(captcha_image_file_name,language)
+        captcha=captcha.strip()
+        captcha=captcha.replace(' ','')
+        return captcha
+
     def get_table_data(self,element,data_type='text'):
         """
         以二维数组返回表格每一行的每一列的数据[[row1][row2][colume1,clume2]]
@@ -251,7 +280,7 @@ class BrowserOperator:
             print '获取表格内容异常:'+e.message
         return table_data
 
-    def getElement(self,elementInfo):
+    def getElement(self,elementInfo,highlight_seconds=5):
         """
         定位单个元素
         :param elementInfo:
@@ -299,10 +328,10 @@ class BrowserOperator:
             elif locator_type==By.TAG_NAME:
                 webElement = WebDriverWait(self._driver,wait_seconds).until(lambda driver:driver.find_element_by_tag_name(locator_value))
         if not wait_type==Wait_By.TITLE_IS and not wait_type==Wait_By.TITLE_CONTAINS:
-            self.highLight(webElement)
+            self.highLight(webElement,highlight_seconds)
         return webElement
 
-    def getElements(self,elementInfo):
+    def getElements(self,elementInfo,highlight_seconds=5):
         """
         定位多个元素
         :param elementInfo:
@@ -340,7 +369,7 @@ class BrowserOperator:
             self.highLight(webElement)
         return webElements
 
-    def getSubElement(self,parent_element,sub_elementInfo):
+    def getSubElement(self,parent_element,sub_elementInfo,highlight_seconds=5):
         """
         获得元素的单个子元素
         :param parent_element: 父元素
@@ -380,10 +409,10 @@ class BrowserOperator:
             subWebElement = WebDriverWait(webElement,wait_seconds).until(lambda webElement:webElement.find_element_by_tag_name(locator_value))
         else:
             return None
-        self.highLight(subWebElement)
+        self.highLight(subWebElement,highlight_seconds)
         return subWebElement
 
-    def getSubElements(self, parent_element, sub_elementInfo):
+    def getSubElements(self, parent_element, sub_elementInfo,highlight_seconds=5):
         """
         获得元素的多个子元素
         :param parent_element: 父元素
@@ -424,7 +453,7 @@ class BrowserOperator:
         else:
             return None
         for subWebElement in subWebElements:
-            self.highLight(subWebElement)
+            self.highLight(subWebElement,highlight_seconds)
         return subWebElements
 
     def explicit_wait_page_title(self,elementInfo):
