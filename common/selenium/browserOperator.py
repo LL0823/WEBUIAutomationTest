@@ -26,7 +26,7 @@ class BrowserOperator:
 
     def _change_element_to_webElement_type(self,element,highlight_seconds=5):
         if isinstance(element, ElementInfo):
-            webElement=self.getElement(element)
+            webElement=self.getElement(element,highlight_seconds)
         elif isinstance(element,WebElement):
             webElement=element
         else:
@@ -283,6 +283,7 @@ class BrowserOperator:
     def getElement(self,elementInfo,highlight_seconds=5):
         """
         定位单个元素
+        :param highlight_seconds:
         :param elementInfo:
         :return:
         """
@@ -334,6 +335,7 @@ class BrowserOperator:
     def getElements(self,elementInfo,highlight_seconds=5):
         """
         定位多个元素
+        :param highlight_seconds:
         :param elementInfo:
         :return:
         """
@@ -366,12 +368,13 @@ class BrowserOperator:
             elif locator_type==By.TAG_NAME:
                 webElements = WebDriverWait(self._driver,wait_seconds).until(lambda driver:driver.find_elements_by_tag_name(locator_value))
         for webElement in webElements:
-            self.highLight(webElement)
+            self.highLight(webElement,highlight_seconds)
         return webElements
 
     def getSubElement(self,parent_element,sub_elementInfo,highlight_seconds=5):
         """
         获得元素的单个子元素
+        :param highlight_seconds:
         :param parent_element: 父元素
         :param sub_elementInfo: 子元素,只能提供pojo.elementInfo.ElementInfo类型
         :return:
@@ -415,6 +418,7 @@ class BrowserOperator:
     def getSubElements(self, parent_element, sub_elementInfo,highlight_seconds=5):
         """
         获得元素的多个子元素
+        :param highlight_seconds:
         :param parent_element: 父元素
         :param sub_elementInfo: 子元素,只能提供pojo.elementInfo.ElementInfo类型
         :return:
