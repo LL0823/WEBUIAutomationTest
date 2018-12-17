@@ -1,6 +1,6 @@
 #-*- coding:utf8 -*-
 import jpype
-from common.java.javaTool import JavaTool
+from common.java.javaTool import StartJpypeJVM
 class CaptchaRecognitionTool:
 
     @classmethod
@@ -13,10 +13,8 @@ class CaptchaRecognitionTool:
         """
 
         # 启动jvm......'
-        jpype.startJVM(jpype.get_default_jvm_path(), "-ea", "-Djava.class.path=" + JavaTool.getAllJar())
+        StartJpypeJVM()
         CaptchaRecognition = jpype.JClass('com.ocr.CaptchaRecognition')
         captchaRecognition = CaptchaRecognition('common/java/lib/tess4j/tessdata/')
         captcha = captchaRecognition.captchaRecognitionWithFile(filePath,language)
-        # '关闭jvm......'
-        jpype.shutdownJVM()
         return captcha
