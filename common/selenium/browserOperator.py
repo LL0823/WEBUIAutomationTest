@@ -166,6 +166,9 @@ class BrowserOperator:
     def switch_to_frame(self,frame_name):
         self._driver.switch_to.frame(frame_name)
 
+    def switch_to_parent_frame(self):
+        self._driver.switch_to.parent_frame()
+
     def page_forward(self):
         self._driver.forward()
 
