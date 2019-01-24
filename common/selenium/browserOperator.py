@@ -183,7 +183,7 @@ class BrowserOperator:
         alert=self._driver.switch_to.alert
         alert.accept()
 
-    def get_alert_test(self):
+    def get_alert_text(self):
         alert=self._driver.switch_to.alert
         return alert.text
 
