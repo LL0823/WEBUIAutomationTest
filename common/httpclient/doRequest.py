@@ -30,28 +30,28 @@ class DoRequest(object):
     def getCookies(self):
         return self._session.cookies.__str__()
 
-    def post_with_form(self,path,params=None):
+    def post_with_form(self,path,params=None,**kwargs):
         r=self._session.post(self._url+path,data=params,headers=self._headers,cookies=self._cookies,timeout=self._timeout,
-                        proxies=self._proxies)
+                        proxies=self._proxies,**kwargs)
         return self._dealResponseResult(r)
 
-    def post_with_file(self,path,filePath,params=None,fileKey='file'):
+    def post_with_file(self,path,filePath,params=None,fileKey='file',**kwargs):
         files = {fileKey: open(filePath, 'rb')}
         r = self._session.post(self._url+path, data=params, files=files,headers=self._headers, cookies=self._cookies,
-                          timeout=self._timeout,proxies=self._proxies)
+                          timeout=self._timeout,proxies=self._proxies,**kwargs)
         return self._dealResponseResult(r)
 
-    def get(self,path,params=None):
+    def get(self,path,params=None,**kwargs):
         r = self._session.get(self._url+path, params=params, headers=self._headers, cookies=self._cookies, timeout=self._timeout,
-                          proxies=self._proxies)
+                          proxies=self._proxies,**kwargs)
         return self._dealResponseResult(r)
 
-    def delete(self,path):
+    def delete(self,path,**kwargs):
         r = self._session.delete(self._url+path,headers=self._headers, cookies=self._cookies, timeout=self._timeout,
-                          proxies=self._proxies)
+                          proxies=self._proxies,**kwargs)
         return self._dealResponseResult(r)
 
-    def getFile(self,path,storeFilePath,params=None):
+    def getFile(self,path,storeFilePath,params=None,**kwargs):
         """
         下载文件
         :param path:
@@ -60,7 +60,7 @@ class DoRequest(object):
         :return:
         """
         r=requests.get(self._url+path,params=params,headers=self._headers, cookies=self._cookies, timeout=self._timeout,
-                       proxies=self._proxies)
+                       proxies=self._proxies,**kwargs)
         httpResponseResult=HttpResponseResult()
         httpResponseResult.status_code=r.status_code
         httpResponseResult.headers=self._session.headers.__str__()
